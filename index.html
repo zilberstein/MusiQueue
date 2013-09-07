@@ -2,10 +2,23 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="lib/jquery.min.js"></script>
+        <script type="text/javascript" src="init.js"></script>
     </head>
     <body>
         <div class="jumbotron">
-            <h1>Hello World</h1>
+            <h1 id="musiqueue">MUSI<span style="color:#d00">QUEUE</span> 2.0</h1>
+            <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+            <div class="form">
+                <div class="form-group">
+                    <label>ENTER AN ARTIST</label>
+                    <input type="text" class="form-control" id="artist">
+                    <button id="go" class="btn btn-default">Go</button>
+                </div>
+            </div>
         </div>
+        <div id="responce"></div>
     </body>
+    <script type="text/javascript" src="source.js"></script>
 </html>
