@@ -34,6 +34,7 @@ window.fbAsyncInit = function() {
           }
           $('#events').html(rendered_html);
           $('.event').click(function(e) {
+            var event_name = $(e.target).html();
             var query = 'https://graph.facebook.com/fql/?q=SELECT music FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid=' + $(e.target).attr('id') + ' AND rsvp_status="attending") AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me())&access_token=' + access_token;
             $.ajax({
               url : query
@@ -53,11 +54,34 @@ window.fbAsyncInit = function() {
                     }
                  }
               }
-
+              var ranks = {};
+              var max_rank = 0;
               for (var artist in bitch_music) {
-                rendered_html += "<h4>" + artist +": " + bitch_music[artist] +"</h4>";
+                if (bitch_music[artist] > max_rank) {max_rank = bitch_music[artist];}
+                if (ranks[bitch_music[artist]]) {
+                  ranks[bitch_music[artist]].push(artist);
+                } else {
+                  ranks[bitch_music[artist]] = [artist];
+                }
               }
-              $('#response').html(rendered_html);
+              for (var i=max_rank; i > 0; i--) {
+                rendered_html += "<h4>" + i + ": " + JSON.stringify(ranks[i] || []) + "</h4>";
+              }
+              var url = 'http://ws.spotify.com/search/1/track.json?q=artist:' + ranks[max_rank][0].toLowerCase().replace(/ /g, '+');
+              $.ajax({
+                  url: url
+              }).done( function(data){
+                  // alert(JSON.stringify(data));
+                  var tracks = [];
+                  var len = data.tracks.length > 85 ? 85 : data.tracks.length;
+                  for (var i = 0; i < len; i++) {
+                    tracks.push(data.tracks[i].href.replace(/^.*:(\w+)$/g, '$1'));
+                  }
+                  alert(JSON.stringify(tracks));
+                  $('#response').html(
+                      '<iframe src=\'https://embed.spotify.com/?uri=spotify:trackset:' + event_name + ':' + tracks.join(',') + '\' width=\'300\' height=\'380\' frameborder=\'0\' allowtransparency=\'true\'></iframe>'
+                  );
+              });
 
           });
         });
