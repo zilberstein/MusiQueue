@@ -1,3 +1,5 @@
+var events = {};
+
 /* Facebook API Shit */
 window.fbAsyncInit = function() {
   FB.init({
@@ -20,12 +22,46 @@ window.fbAsyncInit = function() {
       // have logged in to the app.
       
       var access_token = FB.getAuthResponse().accessToken;
-      alert(access_token);
+      console.log(access_token);
+      // alert(access_token);
       $.ajax({
           url:'https://graph.facebook.com/me/events?access_token=' + access_token
         }).done(function(data) {
-          alert(JSON.stringify(data));
-        })
+          events = data.data;
+          var rendered_html = '';
+          for (var i = 0; i < events.length; i++) {
+            rendered_html += "<li><a id=" + events[i].id + " class=\"event\">" + events[i].name + "</a></li>";
+          }
+          $('#events').html(rendered_html);
+          $('.event').click(function(e) {
+            var query = 'https://graph.facebook.com/fql/?q=SELECT music FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid=' + $(e.target).attr('id') + ' AND rsvp_status="attending") AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me())&access_token=' + access_token;
+            $.ajax({
+              url : query
+            }).done(function(data) {
+              var musics = data.data;
+              var bitch_music = {}
+              var rendered_html = '<h2>Bitchez</h2>';
+              for (var i = 0; i < musics.length; i++) {
+                 var artists = musics[i].music.split(', ');
+                 for (var j = 0; j < artists.length; j++) {
+                    if (artists[j] != "") {
+                      if (bitch_music[artists[j]]) {
+                        bitch_music[artists[j]]++;
+                      } else {
+                        bitch_music[artists[j]] = 1;
+                      }
+                    }
+                 }
+              }
+
+              for (var artist in bitch_music) {
+                rendered_html += "<h4>" + artist +": " + bitch_music[artist] +"</h4>";
+              }
+              $('#response').html(rendered_html);
+
+          });
+        });
+        });
 
 
     } else if (response.status === 'not_authorized') {

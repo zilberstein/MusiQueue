@@ -4,21 +4,31 @@
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="style.css">
         <script type="text/javascript" src="lib/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="init.js"></script>
     </head>
     <body>
         <div class="jumbotron">
             <h1 id="musiqueue">MUSI<span style="color:#d00">QUEUE</span> 2.0</h1>
-            <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
-            <div class="form">
+            <fb:login-button show-faces="true" scope="user_likes,user_events,friends_likes" width="200" max-rows="1"></fb:login-button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Select an Event <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" id="events" role="menu">
+              </ul>
+            </div>
+           <!--  <div class="form">
                 <div class="form-group">
                     <label>ENTER AN ARTIST</label>
                     <input type="text" class="form-control" id="artist">
                     <button id="go" class="btn btn-default">Go</button>
                 </div>
-            </div>
+            </div> -->
         </div>
-        <div id="responce"></div>
+        <div id="response">
+            
+        </div>
     </body>
     <script type="text/javascript" src="source.js"></script>
 </html>

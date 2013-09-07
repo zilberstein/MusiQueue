@@ -11,3 +11,5 @@ $('#go').click(function(){
         ));
     });
 });
+
+// $('#responce').html(JSON.stringify(events));
