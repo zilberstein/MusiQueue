@@ -3,13 +3,14 @@
 <element name="x-person" constructor="PersonElement" 
   extends="div" apply-author-styles>
   <template>
-    <p>This is a person.</p>
+    {{person.name}}
   </template>
   <script type="application/dart">
     import 'package:web_ui/web_ui.dart';
+    import 'package:ohq/model.dart';
     
     class PersonElement extends WebComponent {
-      int person;
+      Person person;
     }
   </script>
 </element>

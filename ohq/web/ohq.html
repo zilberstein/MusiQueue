@@ -4,20 +4,22 @@
 
 <script type="application/dart" src="ohq.dart"></script>
 <script src="packages/browser/dart.js"></script>
-<link rel="stylesheet" href="ohq.css">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 
-<head>
-  <meta charset="utf-8">
-  <title>OHQ</title>
-</head>
 <body>
+  <div class="jumbotron">
+    <h1>This is the line right now: </h1>
+    <div>
+      <template iterate="student in queue">
+        <x-person person="{{student}}"></x-person>
+      </template>
+    </div>
   
-  <h1>Kill Me</h1>
+  </div>
+  <form>
+    <span>Your Name: </span>
+    <input type="text">
+    <input type="submit" value="Get in Line">
+  </form>
   
-    <p>Now</p>
-    <template iterate="person in queue">
-      <x-person person="{{person}}"></x-person>
-    </template>
-  
-  <p>please</p>
 </body>
