@@ -4,11 +4,22 @@
 
 <script type="application/dart" src="ohq.dart"></script>
 <script src="packages/browser/dart.js"></script>
-<link rel="stylesheet" href="ohq.css">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 
-<div>
-  <template iterate="student in queue">
-    <x-person person="{{student}}"></x-person>
-  </template>
-
-</div>
+<body>
+  <div class="jumbotron">
+    <h1>This is the line right now: </h1>
+    <div>
+      <template iterate="student in queue">
+        <x-person person="{{student}}"></x-person>
+      </template>
+    </div>
+  
+  </div>
+  <form>
+    <span>Your Name: </span>
+    <input type="text">
+    <input type="submit" value="Get in Line">
+  </form>
+  
+</body>
