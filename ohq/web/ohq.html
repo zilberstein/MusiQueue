@@ -6,18 +6,9 @@
 <script src="packages/browser/dart.js"></script>
 <link rel="stylesheet" href="ohq.css">
 
-<head>
-  <meta charset="utf-8">
-  <title>OHQ</title>
-</head>
-<body>
-  
-  <h1>Kill Me</h1>
-  
-    <p>Now</p>
-    <template iterate="person in queue">
-      <x-person person="{{person}}"></x-person>
-    </template>
-  
-  <p>please</p>
-</body>
+<div>
+  <template iterate="student in queue">
+    <x-person person="{{student}}"></x-person>
+  </template>
+
+</div>

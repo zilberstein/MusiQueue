@@ -1,11 +1,10 @@
 library ohq;
 
-import '../lib/model.dart';
+import 'package:ohq/model.dart';
 import 'package:web_ui/web_ui.dart';
 
-@observable List<int> queue = [2];
+@observable List<Person> queue = [];
 
 void main() {
-  //queue = new List();
-  queue.add(2);
+  queue.add(new Person("Tiernan"));
 }
