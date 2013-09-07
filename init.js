@@ -22,8 +22,6 @@ window.fbAsyncInit = function() {
       // have logged in to the app.
       
       var access_token = FB.getAuthResponse().accessToken;
-      console.log(access_token);
-      // alert(access_token);
       $.ajax({
           url:'https://graph.facebook.com/me/events?access_token=' + access_token
         }).done(function(data) {
@@ -33,7 +31,10 @@ window.fbAsyncInit = function() {
             rendered_html += "<li><a id=" + events[i].id + " class=\"event\">" + events[i].name + "</a></li>";
           }
           $('#events').html(rendered_html);
-          $('.event').click(function(e) {
+          $('.event').click(doEverything);
+
+          function doEverything(e) {
+            $('#content').addClass('blur');
             var event_name = $(e.target).html();
             var query = 'https://graph.facebook.com/fql/?q=SELECT music FROM user WHERE uid IN (SELECT uid FROM event_member WHERE eid=' + $(e.target).attr('id') + ' AND rsvp_status="attending") AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me())&access_token=' + access_token;
             $.ajax({
@@ -41,7 +42,6 @@ window.fbAsyncInit = function() {
             }).done(function(data) {
               var musics = data.data;
               var bitch_music = {}
-              var rendered_html = '<h2>Bitchez</h2>';
               for (var i = 0; i < musics.length; i++) {
                  var artists = musics[i].music.split(', ');
                  for (var j = 0; j < artists.length; j++) {
@@ -64,27 +64,47 @@ window.fbAsyncInit = function() {
                   ranks[bitch_music[artist]] = [artist];
                 }
               }
+              var artists = [];
               for (var i=max_rank; i > 0; i--) {
-                rendered_html += "<h4>" + i + ": " + JSON.stringify(ranks[i] || []) + "</h4>";
+                artists = artists.concat(ranks[i] || []);
               }
-              var url = 'http://ws.spotify.com/search/1/track.json?q=artist:' + ranks[max_rank][0].toLowerCase().replace(/ /g, '+');
-              $.ajax({
-                  url: url
-              }).done( function(data){
-                  // alert(JSON.stringify(data));
-                  var tracks = [];
-                  var len = data.tracks.length > 85 ? 85 : data.tracks.length;
-                  for (var i = 0; i < len; i++) {
-                    tracks.push(data.tracks[i].href.replace(/^.*:(\w+)$/g, '$1'));
+              var base_url = 'http://ws.spotify.com/search/1/track.json?q=artist:'
+              num_artists = artists.length > 10 ? 10 : artists.length;
+              var datas = [];
+              for (var i=0; i<num_artists; i++) {
+                $.ajax({
+                    url: base_url + artists[i].toLowerCase().replace(/ /g, '+')
+                }).done(function(data){
+                  datas.push(data);
+                  if (datas.length == num_artists) {
+                    var tracks = [];
+                    for (var i=0; i<num_artists; i++) {
+                      var tracks_artist = [];
+                      var l = datas[i].tracks.length > 5 ? 5 : datas[i].tracks.length;
+                      for (var j = 0; j < l; j++) {
+                        tracks_artist.push(datas[i]['tracks'][j].href.replace(/^.*:(\w+)$/g, '$1'));
+                      }
+                      tracks = tracks.concat(tracks_artist);
+                    }
+                    tracks = shuffle(tracks);
+                    $('#response').html(
+                        '<iframe src=\'https://embed.spotify.com/?uri=spotify:trackset:' + event_name + ':' + tracks.join(',') + '\' width=\'300\' height=\'380\' frameborder=\'0\' allowtransparency=\'true\'></iframe>'
+                    )
+                    $('#response').show();
+                    setTimeout(function(){$('#response').addClass('vis');}, 500);
+                    $('body').click(function(){
+                      $('#response').removeClass('vis');
+                      $('#content').removeClass('blur');
+                      setTimeout(function(){$('#response').hide();}, 500);
+                      $('body').unbind('click');
+                      // $('.event').click(doEverything);
+                    });
                   }
-                  alert(JSON.stringify(tracks));
-                  $('#response').html(
-                      '<iframe src=\'https://embed.spotify.com/?uri=spotify:trackset:' + event_name + ':' + tracks.join(',') + '\' width=\'300\' height=\'380\' frameborder=\'0\' allowtransparency=\'true\'></iframe>'
-                  );
-              });
+                });
+              }
+            });
 
-          });
-        });
+          };
         });
 
 
@@ -116,3 +136,9 @@ window.fbAsyncInit = function() {
    js.src = "//connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
   }(document));
+
+
+function shuffle(o){ //v1.0
+  for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+  return o;
+};
