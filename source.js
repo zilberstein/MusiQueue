@@ -14,3 +14,9 @@ $('#go').click(function(){
 
 // $('#responce').html(JSON.stringify(events));
 $('#quotes').carousel();
+$('.flipper').click(function(){
+    $('.flip-wrapper').toggleClass('flipped');
+    // setTimeout(function() {
+    //     $('.front').hide();
+    // }, 500);
+});

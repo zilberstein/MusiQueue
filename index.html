@@ -2,45 +2,53 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="style.min.css">
         <script type="text/javascript" src="lib/jquery.min.js"></script>
         <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="init.js"></script>
+        <script type="text/javascript" src="init.min.js"></script>
         <title>MusiQueue</title>
     </head>
     <body>
-        <div id="content" class="jumbotron">
-            <h1 id="musiqueue">MUSI<span style="color:#d00">QUEUE</span> 2.0</h1>
-            <h3>It just works</h3>
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>Log in with Facebook</h4>
-                    <fb:login-button show-faces="true" scope="user_likes,user_events,friends_likes" width="200" max-rows="1"></fb:login-button>
-                </div>
-                <div class="col-md-6">
-                    <h4>Choose an Event</h4>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-                        Select an Event <span class="caret"></span>
-                      </button>
+        <div class="flip-container">
+            <div class="flip-wrapper">
+                <div id="content" class="jumbotron front">
+                    <h1 id="musiqueue">MUSI<span style="color:#d00">QUEUE</span> 2.0</h1>
+                    <h3>Perfect event playlists.  It just works.</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Log in with Facebook</h4>
+                            <fb:login-button show-faces="true" scope="user_likes,user_events,friends_likes" width="200" max-rows="1"></fb:login-button>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Choose an Event</h4>
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                                Select an Event <span class="caret"></span>
+                              </button>
 
-                      <ul class="dropdown-menu" id="events" role="menu">
-                      </ul>
+                              <ul class="dropdown-menu" id="events" role="menu">
+                              </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="flipper"><span class="glyphicon glyphicon-info-sign"></span></a>
+                </div>
+                <div class="back">
+                    <div id="info">
+                        <h3>MUSI<span style="color:#d00">QUEUE</span> 2.0</h3>
+                        <p> is an application created by Noam Zilberstein, Lucas Pe&#241;a, Tayler Mandel, and Tiernan Garsys. It is an easy to use app made to help hosts throw the perfect party.</p>
+
+                        <h3>HOW IT WORKS</h3>
+                        <p>MUSIQUEUE 2.0 allows event hosts to construct a playlist for their event.  Our algorithm uses the Facebook Graph API to determine the musical preferences of the event attendees and uses this information to prioritize artists in the playlist.  Artists that are 'liked' by more attendees are more likely to appear in the play queue.  This algorithm creates a unique, diverse playlist that is guaranteed to satisfy all guests and can be played in app via Spotify.</p>
+
+                         <a class="flipper"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
                     </div>
                 </div>
             </div>
         </div>
-
-           <!--  <div class="form">
-                <div class="form-group">
-                    <label>ENTER AN ARTIST</label>
-                    <input type="text" class="form-control" id="artist">
-                    <button id="go" class="btn btn-default">Go</button>
-                </div>
-            </div> -->
         </div>
         <div id="response">
         </div>
     </body>
-    <script type="text/javascript" src="source.js"></script>
+    <script type="text/javascript" src="source.min.js"></script>
 </html>
