@@ -7,7 +7,7 @@
 
 var events = {};
 
-/* Facebook API Shit */
+/* Facebook API */
 window.fbAsyncInit = function() {
   FB.init({
     appId      : '164810690371362', // App ID
