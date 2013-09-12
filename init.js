@@ -41,27 +41,27 @@ window.fbAsyncInit = function() {
               url : query
             }).done(function(data) {
               var musics = data.data;
-              var bitch_music = {}
+              var songs = {}
               for (var i = 0; i < musics.length; i++) {
                  var artists = musics[i].music.split(', ');
                  for (var j = 0; j < artists.length; j++) {
                     if (artists[j] != "") {
-                      if (bitch_music[artists[j]]) {
-                        bitch_music[artists[j]]++;
+                      if (songs[artists[j]]) {
+                        songs[artists[j]]++;
                       } else {
-                        bitch_music[artists[j]] = 1;
+                        songs[artists[j]] = 1;
                       }
                     }
                  }
               }
               var ranks = {};
               var max_rank = 0;
-              for (var artist in bitch_music) {
-                if (bitch_music[artist] > max_rank) {max_rank = bitch_music[artist];}
-                if (ranks[bitch_music[artist]]) {
-                  ranks[bitch_music[artist]].push(artist);
+              for (var artist in songs) {
+                if (songs[artist] > max_rank) {max_rank = songs[artist];}
+                if (ranks[songs[artist]]) {
+                  ranks[songs[artist]].push(artist);
                 } else {
-                  ranks[bitch_music[artist]] = [artist];
+                  ranks[songs[artist]] = [artist];
                 }
               }
               var artists = [];
