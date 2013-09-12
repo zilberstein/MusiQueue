@@ -1,3 +1,10 @@
+/* Authors:
+   Noam Zilberstein - noamz@seas.upenn.edu
+   Lucas Pena - lpena@seas.upenn.edu
+   Tayler Mandel - tmandel@seas.upenn.edu
+   Tiernan Garsys - tgarsys@seas.upenn.edu
+*/
+
 var events = {};
 
 /* Facebook API Shit */
